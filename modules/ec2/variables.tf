@@ -3,15 +3,15 @@
   type        = string
 }
 
-variable "subnet_id" {
-  description = "Subnet ID"
-  type        = string
-}
+#variable "subnet_id" {
+#  description = "Subnet ID"
+#  type        = string
+#}
 
-variable "security_group_ids" {
-  description = "List of security groups"
-  type        = list(string)
-}*/
+#variable "security_group_ids" {
+#  description = "List of security groups"
+#  type        = list(string)
+#}*/
 
 variable "aws_region" {
   description = "AWS region to deploy resources into"
