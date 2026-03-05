@@ -19,7 +19,7 @@ variable "aws_region" {
 }
 
 variable "instance_type" {
-  description = "EC2 instance type"
+  description = "EC2 iyesnstance type"
   type        = string
 }
 
