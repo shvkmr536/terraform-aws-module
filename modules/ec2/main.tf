@@ -1,12 +1,14 @@
-resource "aws_instance" "demo" {
+resource "aws_instance" "main" {
   ami           = var.ami_id
   instance_type = var.instance_type
-  #subnet_id     = var.subnet_id
-  #vpc_security_group_ids = var.security_group_ids
+  vpc_security_group_ids = var.security_group_ids
+  key_name = var.key_name
+  subnet_id = var.subnet_id
   tags = {
-    Name        = "web-server-${var.env}"
-    Environment = var.env
+    Name        = "${var.platform}-${var.environment}-ec2-${var.os_type}"
+    Environment = var.environment
     ManagedBy   = "Terraform"
-    Owner       = "DevOps"
+    team        = var.team
+
   }
 }

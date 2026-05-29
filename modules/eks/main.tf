@@ -1,0 +1,80 @@
+# EKS Cluster
+resource "aws_eks_cluster" "eks" {
+  name     = "${var.platform}-${var.environment}-eks-cluster"
+  role_arn = var.cluster_role_arn
+
+  vpc_config {
+    subnet_ids = var.private_subnets
+  }
+
+  depends_on = [
+    var.cluster_policy_attachment
+  ]
+}
+
+# EKS Node Group
+resource "aws_eks_node_group" "nodegroup" {
+  cluster_name    = aws_eks_cluster.eks.name
+  node_group_name = "${var.platform}-${var.environment}-eks-nodegroup"
+  node_role_arn   = var.node_role_arn
+  subnet_ids      = var.private_subnets
+
+  scaling_config {
+    desired_size = 2
+    max_size     = 4
+    min_size     = 2
+  }
+
+  instance_types = ["t3.medium"]
+
+  depends_on = [
+    var.worker_policy_attachment
+  ]
+}
+
+#IAM role for EKS Cluster
+resource "aws_iam_role" "eks_cluster_role" {
+  name = "${var.platform}-${var.environment}-eks-cluster-role"
+
+  assume_role_policy = jsonencode({
+    Version = "2012-10-17"
+
+    Statement = [{
+      Action = "sts:AssumeRole"
+      Effect = "Allow"
+
+      Principal = {
+        Service = "eks.amazonaws.com"
+      }
+    }]
+  })
+}
+
+#iam policy attachment for EKS Cluster
+resource "aws_iam_role_policy_attachment" "cluster" {
+  role       = aws_iam_role.eks_cluster_role.name
+  policy_arn = "arn:aws:iam::aws:policy/AmazonEKSClusterPolicy"
+}
+
+resource "aws_iam_role" "worker_role" {
+  name = "${var.platform}-${var.environment}-eks-worker-role"
+
+  assume_role_policy = jsonencode({
+    Version = "2012-10-17"
+
+    Statement = [{
+      Action = "sts:AssumeRole"
+      Effect = "Allow"
+
+      Principal = {
+        Service = "ec2.amazonaws.com"
+      }
+    }]
+  })
+}
+
+#iam policy attachment for EKS Worker
+resource "aws_iam_role_policy_attachment" "worker" {
+  role       = aws_iam_role.worker_role.name
+  policy_arn = "arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy"
+}
