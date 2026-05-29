@@ -85,12 +85,7 @@ resource "aws_iam_role_policy_attachment" "worker" {
 }
 
 
-#newly added 
-resource "aws_iam_role_policy_attachment" "worker" {
-  role       = aws_iam_role.worker_role.name
-  policy_arn = "arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy"
-}
-
+#newly added
 resource "aws_iam_role_policy_attachment" "worker_cni" {
   role       = aws_iam_role.worker_role.name
   policy_arn = "arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy"
