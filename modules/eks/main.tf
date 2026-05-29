@@ -34,7 +34,6 @@ resource "aws_eks_node_group" "nodegroup" {
     aws_iam_role_policy_attachment.worker,
     aws_iam_role_policy_attachment.worker_cni,
     aws_iam_role_policy_attachment.worker_ecr
-]
   ]
 }
 #IAM role for EKS Cluster
