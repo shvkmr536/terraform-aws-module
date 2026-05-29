@@ -15,26 +15,6 @@ variable "private_subnets" {
   default     = ["10.0.1.0/24", "10.0.2.0/24"]
 }
 
-variable "cluster_role_arn" {
-  description = "The ARN of the EKS cluster role"
-  type        = string
-}
-
-variable "node_role_arn" {
-  description = "The ARN of the EKS worker node role"
-  type        = string
-}
-
-variable "cluster_policy_attachment" {
-  description = "The policy attachment for the EKS cluster role"
-  type        = string
-}
-
-variable "worker_policy_attachment" {
-  description = "The policy attachment for the EKS worker node role"
-  type        = string
-}
-
 variable "platform" {
   description = "The platform for the EKS cluster"
   type        = string
