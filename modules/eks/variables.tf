@@ -10,9 +10,8 @@ variable "platform" {
 
 variable "private_subnets" {
   description = "The team responsible for the EKS cluster"
-  type        = string
+  type        = list(string)
 }
-
 
 variable "team" {
   description = "The team responsible for the EKS cluster"
