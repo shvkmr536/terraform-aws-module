@@ -13,6 +13,12 @@ variable "platform" {
   type        = string
 }
 
+variable "private_subnets" {
+  description = "The team responsible for the EKS cluster"
+  type        = string
+}
+
+
 variable "team" {
   description = "The team responsible for the EKS cluster"
   type        = string
