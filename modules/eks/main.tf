@@ -1,14 +1,15 @@
 # EKS Cluster
 resource "aws_eks_cluster" "eks" {
-  name     = "${var.platform}-${var.environment}-eks-cluster"
-  role_arn = var.cluster_role_arn
+  name = "${var.platform}-${var.environment}-eks-cluster"
+
+  role_arn = aws_iam_role.eks_cluster_role.arn
 
   vpc_config {
     subnet_ids = var.private_subnets
   }
 
   depends_on = [
-    var.cluster_policy_attachment
+    aws_iam_role_policy_attachment.cluster
   ]
 }
 
@@ -16,8 +17,10 @@ resource "aws_eks_cluster" "eks" {
 resource "aws_eks_node_group" "nodegroup" {
   cluster_name    = aws_eks_cluster.eks.name
   node_group_name = "${var.platform}-${var.environment}-eks-nodegroup"
-  node_role_arn   = var.node_role_arn
-  subnet_ids      = var.private_subnets
+
+  node_role_arn = aws_iam_role.worker_role.arn
+
+  subnet_ids = var.private_subnets
 
   scaling_config {
     desired_size = 2
@@ -28,10 +31,9 @@ resource "aws_eks_node_group" "nodegroup" {
   instance_types = ["t3.medium"]
 
   depends_on = [
-    var.worker_policy_attachment
+    aws_iam_role_policy_attachment.worker
   ]
 }
-
 #IAM role for EKS Cluster
 resource "aws_iam_role" "eks_cluster_role" {
   name = "${var.platform}-${var.environment}-eks-cluster-role"
