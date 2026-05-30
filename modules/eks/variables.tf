@@ -17,3 +17,10 @@ variable "team" {
   description = "The team responsible for the EKS cluster"
   type        = string
 }
+
+variable "cluster_version" {
+  description = "EKS cluster version"
+  type        = string
+}
+
+
