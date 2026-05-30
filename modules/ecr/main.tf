@@ -38,6 +38,8 @@ resource "aws_ecr_lifecycle_policy" "cleanup_policy" {
 
       selection = {
         tagStatus   = "tagged"
+        #tagPatternList = ["*"]
+        tagPatternList = ["sha-*"]
         countType   = "imageCountMoreThan"
         countNumber = 30
       }
