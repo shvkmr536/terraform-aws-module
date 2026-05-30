@@ -1,8 +1,13 @@
 # EKS Cluster
 resource "aws_eks_cluster" "eks" {
   name = "${var.platform}-${var.environment}-eks-cluster"
-
+  version = var.cluster_version
   role_arn = aws_iam_role.eks_cluster_role.arn
+  enabled_cluster_log_types = [
+  "api",
+  "audit",
+  "authenticator"
+]
 
   vpc_config {
     subnet_ids = var.private_subnets
