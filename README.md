@@ -20,6 +20,7 @@ terraform {
 
 # `versions.tf`
 
+```hcl
 terraform {
   required_version = ">= 1.6.0"
 
@@ -34,14 +35,16 @@ terraform {
 provider "aws" {
   region = var.aws_region
 }
+```
 
 
 
 
 
 
-# `main.tf`
+## `main.tf`
 
+```hcl
 module "vpc" {
   source = "../../modules/vpc"
 
@@ -92,9 +95,11 @@ module "rds" {
     module.sg.rds_sg
   ]
 }
+```
 
-# `varilables.tf`
+## Variables
 
+```hcl
 variable "environment" {}
 variable "vpc_cidr" {}
 variable "azs" {}
@@ -108,16 +113,17 @@ variable "username" {}
 variable "password" {}
 variable "platform" {}
 
-
-#variable "subnet_id" {}
+variable "subnet_id" {}
 variable "instance_type" {}
 variable "os_type" {}
 variable "ami_id" {}
 variable "team" {}
 variable "key_name" {}
+```
 
-# `terraform.tfvars`
+## `terraform.tfvars`
 
+```hcl
 environment = "dev"
 vpc_cidr    = "10.0.0.0/16"
 
@@ -140,3 +146,4 @@ team              = "platform_engineering"
 ami_id            = "ami-091138d0f0d41ff90"
 instance_type     = "t2.micro"
 key_name          = "aws_mac_key"
+```
