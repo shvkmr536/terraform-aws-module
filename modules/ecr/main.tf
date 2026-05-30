@@ -1,6 +1,7 @@
 resource "aws_ecr_repository" "repo" {
   name                 = "${var.platform}-${var.environment}"
   image_tag_mutability = "IMMUTABLE" #immutable tags are generally safer for production, prevents accidental overwriting of images
+  force_delete         = true
 
   image_scanning_configuration {
     scan_on_push = true
