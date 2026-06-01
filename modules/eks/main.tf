@@ -107,7 +107,7 @@ resource "aws_iam_role_policy_attachment" "worker_ecr" {
 #Allow EKS cluster access to other user
 
 resource "aws_eks_access_entry" "admin_user" {
-  cluster_name  = 
+  cluster_name  = aws_eks_cluster.eks.name
   principal_arn = "arn:aws:iam::495680546469:user/admin"
   type          = "STANDARD"
 }
